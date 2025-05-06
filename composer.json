@@ -1,5 +1,5 @@
 {
-    "name": "seata/seata",
+    "name": "seata/seata-hyperf-3-1",
     "description": "Php Implementation For Seata.",
     "license": "Apache-2.0",
     "keywords": [
