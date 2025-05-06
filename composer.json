@@ -1,5 +1,5 @@
 {
-    "name": "seata-hyperf/hyperf-client-3-1",
+    "name": "jmiy/seata-hyperf-client-3-1",
     "description": "Php Implementation For Seata.",
     "license": "Apache-2.0",
     "keywords": [
