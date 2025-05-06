@@ -30,7 +30,7 @@ use Hyperf\Seata\Core\Rpc\Processor\Client\ClientHeartbeatProcessor;
 use Hyperf\Seata\Core\Rpc\Processor\Client\ClientOnResponseProcessor;
 use Hyperf\Seata\Core\Rpc\response;
 use Hyperf\Seata\Core\Rpc\TransactionRole;
-use Hyperf\Utils\Coroutine;
+use Hyperf\Coroutine\Coroutine;
 
 class TmRemotingClient extends AbstractRemotingClient
 {

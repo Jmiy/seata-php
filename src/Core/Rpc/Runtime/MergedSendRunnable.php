@@ -21,8 +21,8 @@ namespace Hyperf\Seata\Core\Rpc\Runtime;
 
 use Hyperf\Seata\Core\Protocol\MergedWarpMessage;
 use Hyperf\Seata\Exception\SeataException;
-use Hyperf\Utils\ApplicationContext;
-use Hyperf\Utils\Coroutine;
+use Hyperf\Context\ApplicationContext;
+use Hyperf\Coroutine\Coroutine;
 
 class MergedSendRunnable
 {

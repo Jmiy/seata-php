@@ -23,7 +23,7 @@ use Hyperf\Seata\Core\Codec\CodecFactory;
 use Hyperf\Seata\Core\Codec\CodecType;
 use Hyperf\Seata\Core\Codec\Seata\MessageCodecFactory;
 use Hyperf\Seata\Core\Codec\Seata\SeataCodec;
-use Hyperf\Utils\ApplicationContext;
+use Hyperf\Context\ApplicationContext;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;

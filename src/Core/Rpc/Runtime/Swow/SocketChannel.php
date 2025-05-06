@@ -29,8 +29,8 @@ use Hyperf\Seata\Core\Rpc\Runtime\V1\ProtocolV1Decoder;
 use Hyperf\Seata\Core\Rpc\Runtime\V1\ProtocolV1Encoder;
 use Hyperf\Seata\Utils\Buffer\ByteBuffer;
 use Hyperf\Seata\Utils\Protocol\RpcMessageUtils;
-use Hyperf\Utils\ApplicationContext;
-use Hyperf\Utils\Coroutine;
+use Hyperf\Context\ApplicationContext;
+use Hyperf\Coroutine\Coroutine;
 use Swow\Socket;
 
 class SocketChannel implements SocketChannelInterface

@@ -25,7 +25,7 @@ use Hyperf\Seata\Core\Model\BranchStatus;
 use Hyperf\Seata\Logger\LoggerFactory;
 use Hyperf\Seata\Logger\LoggerInterface;
 use Hyperf\Seata\Rm\DataSource\DataSourceManager;
-use Hyperf\Utils\Coroutine;
+use Hyperf\Coroutine\Coroutine;
 use seata\src\Rm\DataSource\Phase2Context;
 
 class AsyncWorker

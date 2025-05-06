@@ -21,7 +21,7 @@ namespace Hyperf\Seata\Core\Protocol;
 
 use Hyperf\Seata\Exception\ExecutionException;
 use Hyperf\Seata\Exception\ShouldNeverHappenException;
-use Hyperf\Utils\Exception\TimeoutException;
+use Hyperf\Coroutine\Exception\TimeoutException;
 use RuntimeException;
 use Throwable;
 

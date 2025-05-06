@@ -22,7 +22,7 @@ namespace Hyperf\Database\Connectors;
 use Hyperf\Database\Connection;
 use Hyperf\Database\ConnectionInterface;
 use Hyperf\Seata\Rm\DataSource\MysqlConnectionProxy;
-use Hyperf\Utils\Arr;
+use Hyperf\Collection\Arr;
 use InvalidArgumentException;
 use PDOException;
 use Psr\Container\ContainerInterface;

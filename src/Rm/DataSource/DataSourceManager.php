@@ -38,7 +38,7 @@ use Hyperf\Seata\Logger\LoggerInterface;
 use Hyperf\Seata\Rm\AbstractResourceManager;
 use Hyperf\Seata\Rm\DataSource\Undo\UndoLogManagerFactory;
 use Hyperf\Seata\Rm\PDOProxy;
-use Hyperf\Utils\ApplicationContext;
+use Hyperf\Context\ApplicationContext;
 
 class DataSourceManager extends AbstractResourceManager implements Resource
 {

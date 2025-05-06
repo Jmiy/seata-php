@@ -36,8 +36,8 @@ use Hyperf\Seata\Core\Rpc\Processor\Client\RmUndoLogProcessor;
 use Hyperf\Seata\Core\Rpc\TransactionMessageHandler;
 use Hyperf\Seata\Core\Rpc\TransactionRole;
 use Hyperf\Seata\Exception\TodoException;
-use Hyperf\Utils\ApplicationContext;
-use Hyperf\Utils\Coroutine;
+use Hyperf\Context\ApplicationContext;
+use Hyperf\Coroutine\Coroutine;
 
 class RmRemotingClient extends AbstractRemotingClient
 {
