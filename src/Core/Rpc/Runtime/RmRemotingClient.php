@@ -207,7 +207,8 @@ class RmRemotingClient extends AbstractRemotingClient
                 } catch (\Throwable $exception) {
 //                    var_dump($exception->getMessage());
                 }
-                sleep(5);
+//                sleep(5);
+                Coroutine::sleep(rand(5, 10));
             }
         });
     }

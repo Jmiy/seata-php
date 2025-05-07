@@ -19,6 +19,10 @@ declare(strict_types=1);
  */
 namespace Hyperf\Seata\Core\Protocol;
 
+use Hyperf\Context\ApplicationContext;
+use Hyperf\Contract\IPReaderInterface;
+use Hyperf\Support\Network;
+
 class RegisterTMRequest extends AbstractIdentifyRequest
 {
     protected const serialVersionUID = -5929081344190543690;
@@ -48,7 +52,13 @@ class RegisterTMRequest extends AbstractIdentifyRequest
         if (! empty($transactionServiceGroup)) {
             $stringBuilder .= sprintf('%s=%s', $this->UDATA_VGROUP, $transactionServiceGroup);
             $stringBuilder .= PHP_EOL;
-            $clientIp = gethostbyname(gethostname());
+
+            $clientIp = '';
+            try {
+                $clientIp = Network::ip();
+            } catch (\Throwable $throwable) {
+            }
+
             if (! empty($clientIp)) {
                 $stringBuilder .= sprintf('%s=%s', $this->UDATA_IP, $clientIp);
                 $stringBuilder .= PHP_EOL;

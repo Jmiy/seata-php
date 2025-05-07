@@ -40,7 +40,7 @@ class SocketChannel implements SocketChannelInterface
 
     protected int $messageId;
 
-    protected SwooleSocket $socket;
+    protected Socket $socket;
 
     protected Address $address;
 
@@ -67,13 +67,18 @@ class SocketChannel implements SocketChannelInterface
         $channel = new Channel();
         $this->responses[$rpcMessage->getId()] = $channel;
         $this->sendSyncWithoutResponse($rpcMessage, $timeoutMillis);
+//        $dd = $channel->pop();
+//        var_dump(__METHOD__,$dd);
+//
+//        return $dd;
         return $channel->pop();
     }
 
     public function sendSyncWithoutResponse(RpcMessage $rpcMessage, int $timeoutMillis)
     {
         $data = $this->protocolEncoder->encode($rpcMessage);
-        $this->socket->sendString($data);
+        $this->socket->send($data);
+//        var_dump(__METHOD__,$data,$dd);
     }
 
     public function getAddress(): Address
@@ -108,7 +113,7 @@ class SocketChannel implements SocketChannelInterface
 //                        var_dump('heartbeat', $rpcMessage);
 //                    }
                 } catch (\InvalidArgumentException $exception) {
-//                    var_dump($exception->getMessage());
+                    var_dump($exception->getMessage());
                 } catch (\Throwable $exception) {
                     var_dump($exception->getMessage());
                 }
@@ -125,7 +130,7 @@ class SocketChannel implements SocketChannelInterface
                     $data = $this->protocolEncoder->encode($rpcMessage);
                     $this->socket->sendAll($data);
                 } catch (\Exception $exception) {
-//                    var_dump($exception->getMessage());
+                    var_dump('createSendLoop===>',$exception->getMessage());
                 }
             }
         });
