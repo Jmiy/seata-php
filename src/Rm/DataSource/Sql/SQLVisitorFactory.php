@@ -29,7 +29,6 @@ class SQLVisitorFactory
     public static function get(string $sql, string $dbType = 'mysql')
     {
         $container = ApplicationContext::getContainer();
-        $SQL_RECOGNIZER_FACTORY = $container->get(SQLRecognizerFactory::class);
-        return $SQL_RECOGNIZER_FACTORY->create($sql, $dbType);
+        return $container->get(SQLRecognizerFactory::class)->create($sql, $dbType);
     }
 }

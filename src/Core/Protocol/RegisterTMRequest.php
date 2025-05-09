@@ -19,8 +19,6 @@ declare(strict_types=1);
  */
 namespace Hyperf\Seata\Core\Protocol;
 
-use Hyperf\Context\ApplicationContext;
-use Hyperf\Contract\IPReaderInterface;
 use Hyperf\Support\Network;
 
 class RegisterTMRequest extends AbstractIdentifyRequest

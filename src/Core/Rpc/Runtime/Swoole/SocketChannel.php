@@ -19,6 +19,7 @@ declare(strict_types=1);
  */
 namespace Hyperf\Seata\Core\Rpc\Runtime\Swoole;
 
+use Hyperf\Coroutine\Coroutine;
 use Hyperf\Engine\Channel;
 use Hyperf\Seata\Core\Protocol\MessageType;
 use Hyperf\Seata\Core\Protocol\RpcMessage;
@@ -29,7 +30,7 @@ use Hyperf\Seata\Core\Rpc\Runtime\V1\ProtocolV1Decoder;
 use Hyperf\Seata\Core\Rpc\Runtime\V1\ProtocolV1Encoder;
 use Hyperf\Seata\Utils\Buffer\ByteBuffer;
 use Hyperf\Context\ApplicationContext;
-use Hyperf\Coroutine\Coroutine;
+use Hyperf\Seata\Utils\Protocol\RpcMessageUtils;
 use Swoole\Coroutine\Socket;
 
 class SocketChannel implements SocketChannelInterface
@@ -54,6 +55,7 @@ class SocketChannel implements SocketChannelInterface
     {
         $this->socket = $socket;
         $this->address = $address;
+
         $container = ApplicationContext::getContainer();
         $this->protocolEncoder = $container->get(ProtocolV1Encoder::class);
         $this->protocolDecoder = $container->get(ProtocolV1Decoder::class);
@@ -65,20 +67,16 @@ class SocketChannel implements SocketChannelInterface
     public function sendSyncWithResponse(RpcMessage $rpcMessage, int $timeoutMillis)
     {
         $channel = new Channel();
+        var_dump('Ready to send the rpc message #' . RpcMessageUtils::toLogString($rpcMessage) . PHP_EOL);
         $this->responses[$rpcMessage->getId()] = $channel;
         $this->sendSyncWithoutResponse($rpcMessage, $timeoutMillis);
-//        $dd = $channel->pop();
-//        var_dump(__METHOD__,$dd);
-//
-//        return $dd;
         return $channel->pop();
     }
 
-    public function sendSyncWithoutResponse(RpcMessage $rpcMessage, int $timeoutMillis)
+    public function sendSyncWithoutResponse(RpcMessage $rpcMessage, int $timeoutMillis): void
     {
         $data = $this->protocolEncoder->encode($rpcMessage);
         $this->socket->send($data);
-//        var_dump(__METHOD__,$data,$dd);
     }
 
     public function getAddress(): Address
@@ -100,7 +98,7 @@ class SocketChannel implements SocketChannelInterface
                     }
                     $byteBuffer = ByteBuffer::wrapBinary($data);
                     $rpcMessage = $this->protocolDecoder->decode($byteBuffer);
-
+                    var_dump('Recieved a rpc message #' . RpcMessageUtils::toLogString($rpcMessage) . PHP_EOL);
                     $processorManger->dispatch($this, $rpcMessage);
 
                     if (isset($this->responses[$rpcMessage->getId()])) {
@@ -113,10 +111,15 @@ class SocketChannel implements SocketChannelInterface
 //                        var_dump('heartbeat', $rpcMessage);
 //                    }
                 } catch (\InvalidArgumentException $exception) {
-                    var_dump($exception->getMessage());
+                    var_dump('Recieved a rpc message fail error:' . $exception->getMessage() . PHP_EOL);
+//                    break;
                 } catch (\Throwable $exception) {
-                    var_dump($exception->getMessage());
+                    var_dump('Recieved a rpc message fail error:' . $exception->getMessage() . PHP_EOL);
+//                    break;
                 }
+//                finally {
+//                    isset($rpcMessage) && isset($this->responses[$rpcMessage->getId()]) && $this->responses[$rpcMessage->getId()]->close();
+//                }
             }
         });
     }
@@ -130,7 +133,7 @@ class SocketChannel implements SocketChannelInterface
                     $data = $this->protocolEncoder->encode($rpcMessage);
                     $this->socket->sendAll($data);
                 } catch (\Exception $exception) {
-                    var_dump('createSendLoop===>',$exception->getMessage());
+//                    var_dump($exception->getMessage());
                 }
             }
         });
