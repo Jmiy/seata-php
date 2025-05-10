@@ -67,7 +67,7 @@ class SocketChannel implements SocketChannelInterface
     public function sendSyncWithResponse(RpcMessage $rpcMessage, int $timeoutMillis)
     {
         $channel = new Channel();
-        var_dump('Ready to send the rpc message #' . RpcMessageUtils::toLogString($rpcMessage) . PHP_EOL);
+        var_dump('send the rpc message to TC rpcMessage ===> ' . RpcMessageUtils::toLogString($rpcMessage));
         $this->responses[$rpcMessage->getId()] = $channel;
         $this->sendSyncWithoutResponse($rpcMessage, $timeoutMillis);
         return $channel->pop();
@@ -98,7 +98,7 @@ class SocketChannel implements SocketChannelInterface
                     }
                     $byteBuffer = ByteBuffer::wrapBinary($data);
                     $rpcMessage = $this->protocolDecoder->decode($byteBuffer);
-                    var_dump('Recieved a rpc message #' . RpcMessageUtils::toLogString($rpcMessage) . PHP_EOL);
+                    var_dump('Recieved a rpc message ===> ' . RpcMessageUtils::toLogString($rpcMessage) . PHP_EOL);
                     $processorManger->dispatch($this, $rpcMessage);
 
                     if (isset($this->responses[$rpcMessage->getId()])) {
